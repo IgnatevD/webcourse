@@ -1,23 +1,304 @@
+/* ====== Константи кольорів ====== */
+:root {
+  /* ====== Світла тема ====== */
+  --primary-color: #4056A1;           /* Глибокий темно-синій колір для акцентів (кнопки, заголовки) */
+  --hover-color: #34495e;  
+  --slider-color: #34495e;             /* Трохи світліший колір для ефекту наведення */
+  --background-color: #EFE2BA;        /* М’який світло-сірий фон сторінки */
+  --background-color-hover: #ddedfb67;  /* Трохи затемнений фон при наведенні на елементи */
+  --glass-bg: rgba(255, 255, 255, 0.5); /* Ефект матового скла для карток та секцій */
+  --glass-blur: blur(6px);            /* Розмиття для glassmorphism */
+  --text-color: #2c3e50;              /* Основний колір тексту */
+  --shadow-color: rgba(0, 0, 0, 0.15); /* М’яка тінь для елементів */
+
+  /* ====== Темна тема ====== */
+  --dark-background-color: #0B0C10;       /* Дуже темний фон для темної теми */
+  --dark-text-color: #e0e0e0;             /* Світлий текст для контрасту */
+  --dark-glass-bg: rgba(255, 255, 255, 0.05); /* Прозорість для ефекту glassmorphism у темній темі */
+  --dark-shadow-color: rgba(0, 0, 0, 0.5);  /* Насичена тінь для темних елементів */
+  --dark-background-color-hover: #1e1e1e5b; /* Темний фон при наведенні в темній темі */
+  --dark-primary-color: #66FCF1;           /* Насичений пурпурний для акцентів у темній темі */
+  --dark-hover-color: #a569bd; 
+  --dark-slider-color: #4056A1;                 /* Світліший пурпурний при наведенні */
+}
+
+/* ====== Застосування темної теми ====== */
+body.dark-theme {
+  --primary-color: var(--dark-primary-color);             /* Колір акцентів у темній темі */
+  --hover-color: var(--dark-hover-color);                 /* Колір при наведенні у темній темі */
+  --background-color: var(--dark-background-color);       /* Основний фон */
+  --text-color: var(--dark-text-color);                   /* Основний колір тексту */
+  --glass-bg: var(--dark-glass-bg);                       /* Фон glassmorphism */
+  --shadow-color: var(--dark-shadow-color);               /* Тіні елементів */
+  --background-color-hover: var(--dark-background-color-hover); 
+  --slider-color: var(--dark-slider-color);  
+}
+
+
+/* ====== Основні стилі ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;    
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/webiron.gif') center center / cover no-repeat;
+  opacity: 0.2;        
+  z-index: -1;           
+  pointer-events: none;  
+}
+
+header {
   text-align: center;
-  margin-top: 100px;
-  background-color: #f0f0f0;
+  padding: 20px;
 }
 
-h1 {
-  color: #333;
+header h1 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-width: 300px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ====== Аккордеон ====== */
+.accordion-item {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 25px var(--shadow-color);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accordion-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--shadow-color);
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  outline: none;
+  background: none;
   cursor: pointer;
+  color: var(--primary-color);
+  transition: background 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
+.accordion-header:hover {
+  background: rgba(0, 123, 255, 0.1);
 }
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.accordion-content p,
+.accordion-content ul,
+.accordion-content ol,
+.accordion-content pre {
+  padding: 10px 0;
+}
+
+.accordion-content pre {
+  margin: 5px;
+}
+
+.accordion-content ul,
+.accordion-content ol {
+  padding: 10px 0;
+  margin-left: 20px;
+}
+
+.accordion-content a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.accordion-content h3 {
+  margin-top: 10px;
+}
+
+
+.accordion-content a:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
+
+.accordion-content pre {
+  background: var(--background-color-hover);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.accordion-content code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 2000px;
+  padding: 20px 24px;
+}
+
+/* ====== Перемикач теми ====== */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+  margin-top: -20px;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 36px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  background-color: var(--slider-color);
+  transition: background-color 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.icon {
+  font-size: 18px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+input:checked + .slider {
+  background-color: var(--slider-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(34px);
+}
+
+body.dark-theme .icon.sun {
+  opacity: 1;
+}
+
+body.dark-theme .icon.moon {
+  opacity: 1;
+}
+
+.icon.sun {
+  opacity: 1;
+}
+
+.icon.moon {
+  opacity: 1;
+}
+
+/* ====== Footer ====== */
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 15px;
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  margin-top: 20px;
+  font-size: 0.7rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  text-align: center;
+  word-break: break-word;
+}
+
+footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  word-break: break-word; 
+}
+
+footer a:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
+.author {
+  margin-top: 10px;
+  font-size: 0.7rem;
+}
+
+@media (min-width: 600px) {
+  footer {
+    font-size: 1rem;
+    padding: 30px 20px;
+  }
+}
+
+
